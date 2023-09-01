@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
 import './home.css'
-import axios from '../../utility/axios';
+import axios from "../../utility/axios";
+import { useStateValue } from '../../utility/stateprovider';
 
 const Home = () => {
   const [allQuestions, setallQuestions] = useState([]);
+  const [{user }, dispatch] = useStateValue();
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(`/api/questions/`);
-        console.log(response)
+        const response = await axios.get('/api/questions/');
         setallQuestions(response.data.data);
       } catch (err) {
         alert(err);
@@ -18,7 +19,8 @@ const Home = () => {
     }
     fetchData();
   }, []);
-console.log(allQuestions);
+console.log(allQuestions)
+console.log(user)
 return (
     <div className="container my-5 home-container">
       <div className="d-flex mb-5 justify-content-between">
@@ -29,15 +31,15 @@ return (
       </div>
       <h3>Questions</h3>
       <div>
-        {allQuestions.map((question) => (
+      {allQuestions.map((question) => (
           <div key={question.question_id}>
-            <p>{question.question}</p>
-            
-            <hr />
             <Link
-              to={`questions/${question.question}`}
+              to={`/SingleQuestion/${question.question_id}`}
               className="text-decoration-none text-reset"
-            >
+           >
+            <p>{question.question}</p>
+            <hr />
+          
               
             </Link>
           </div>

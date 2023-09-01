@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs';
 import {connection} from '../../config/db.js';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
+//import { upload } from '../../config/multer.js';
 import dotenv from 'dotenv';
 dotenv.config();
 let verify_data;
@@ -32,8 +33,8 @@ const userController = {
        
         // validate password using regular expression
           const validationResult = validatePassword(password);
-          console.log(validationResult);
-          console.log(validationResult.valid);
+          // console.log(validationResult);
+          // console.log(validationResult.valid);
         if (!validationResult.valid)
             return res
                 .status(400)
@@ -135,7 +136,8 @@ const userController = {
                 return res
                     .status(404)
                     .json({ msg: "Invalid Credentials incorrect password" })
-            const token = jwt.sign({ id: results.user_id, username: results.user_name }, process.env.JWT_SECRET, { expiresIn: "30m" });
+           //token geneate 
+          const token = jwt.sign({ id: results.user_id, username: results.user_name }, process.env.JWT_SECRET, { expiresIn: "30m" });
             return res.json({
                 token,
                 user: {
@@ -219,7 +221,21 @@ const userController = {
 
 
 
+  },
+
+
+  profilepicture: async (req, res) => {
+    try {
+      // const image = req.file;
+      console.log('Request Body:', req.body);
+      // console.log('Uploaded File:', image);
+      res.json(req.body);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Internal server error" });
+    }
   }
+
     
 }
 

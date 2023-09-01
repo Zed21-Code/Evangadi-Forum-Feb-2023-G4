@@ -4,23 +4,24 @@ import './App.css'
 
 //pages
 import Home from './pages/home/Home'
-import Landing from './pages/landing/Landing'
-// import Profile from './pages/profile/Profile'
-import Question_and_answer from './pages/question_and_answer/Question_and_answer'
+import Profile from './pages/profile/Profile'
 
 //components
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 
-import Signup from './components/signup/Sinup';
-import Signin from './components/signIn/Signin';
-import Forget_password from './components/forget_password/Forget_password';
-import Code_enter from './components/forget_password/Code_enter';
-import NewPassword from './components/forget_password/NewPassword'
-import AskQuestion from './pages/AskQuestion/AskQuestion'
+import Signup from './pages/signup/Signup';
+import Signin from './pages/signIn/Signin';
+import Forget_password from './pages/forget_password/Forget_password';
+import Code_enter from './pages/forget_password/Code_enter';
+import NewPassword from './pages/forget_password/newPassword';
+import AskQuestion from './pages/AskQuestion/AskQuestion';
+import SingleQuestion from './pages/singleQuestion/SingleQuestion';
+
+
 
 function App() {
-///newPassword
+
 
   return (
     <div className="App">
@@ -34,19 +35,22 @@ function App() {
                                <Header /> <Signin />
         </>} />
         <Route path='/signup' element={<>
-                              <Header /> <Signup />
+                                <Signup />
                               </>} />
         
         <Route path='/AskQuestion' element={<>
                                <Header /> <AskQuestion />
                               </>} />
-        {/* <Route path='/profile' element={<>
+        <Route path='/profile' element={<>
                                 <Header /><Profile />
-                              </>} /> */}
-
-        <Route path='/questionandanswer' element={<>
-                                <Header /><Question_and_answer />
                               </>} />
+
+       
+        <Route path='/SingleQuestion/:id' element={<>
+                                <Header /><SingleQuestion />
+                              </>} />
+
+        <Route path="/questions/:id" element={<SingleQuestion />} />
 
       </Routes>
 

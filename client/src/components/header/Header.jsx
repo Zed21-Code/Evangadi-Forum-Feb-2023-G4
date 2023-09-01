@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import {useStateValue} from '../../utility/stateprovider'
 import './header.css';
-import axios from 'axios';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const Header = () => {
@@ -15,7 +14,7 @@ const navigate = useNavigate();
    
 
   }, [navigate])  
-
+  
 
   const handlelogout = () => { 
          dispatch({
@@ -41,7 +40,7 @@ const navigate = useNavigate();
 
         <div className="linkcontainer ">
           <ul className='d-flex gap-5'>
-            <li>home</li>
+         <li><Link to='/' id='onelink'>home</Link></li>
             <li>how it work</li>
             {user ?
               <>

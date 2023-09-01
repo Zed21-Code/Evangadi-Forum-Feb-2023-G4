@@ -2,7 +2,7 @@ import { connection } from '../../config/db.js'
 
 const answersService = {
     answersById:(id, callback) => {
-        //id is postId
+        
         connection.query(`SELECT registration.user_name, answer.answer_id, answer.answer, answer.answered_date, profile.image_url
         FROM registration
         JOIN answer ON registration.user_id = answer.user_id

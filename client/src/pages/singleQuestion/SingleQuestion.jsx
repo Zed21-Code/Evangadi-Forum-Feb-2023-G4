@@ -1,16 +1,26 @@
-import axios from '../../utility/axios';
+import axios from "../../utility/axios";
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './questionDetail.css'
 import AnswerQuestion from '../../components/AnswerQuestion/AnswerQuestion';
 import Answer from '../../components/answers/Answers';
+import { useStateValue } from "../../utility/stateprovider";
 
 
 const SingleQuestion = () => {
   let params = useParams();
+   const [{ user }, dispatch] = useStateValue();
   const [question, setQuestion] = useState([]);
   const [answers, setAnswers] = useState([]);
+   const navigate = useNavigate();
+  useEffect(() => {
+    if (!user) { 
+      navigate('/login');
+    }
+    // console.log(user);
 
+  }, [navigate])
+  
   useEffect(() => { 
     async function fetchData() {
       try {
@@ -39,25 +49,25 @@ const SingleQuestion = () => {
       console.log("problem", err);
     }
   };
-  console.log(answers);
+ // console.log(answers);
   return (
-    <>
-      <h3>Question</h3>
-      <h5>{question?.question}</h5>
-       <p>{question?.category}</p>
-      <p>{question?.question_description}</p>
-      <p>{question?.inserted_datetime}</p>
+    <div className="container">
+      <h2>Question</h2>
+      <h4>{question?.question}</h4>
+       <h5>{question?.category}</h5>
+      <h5>{question?.question_descrih5tion}</h5>
+      <h6>{question?.inserted_datetime}</h6>
       <hr />
       <hr />
       <div>{answers.length > 0 && <h3>Answer From The Community</h3>}</div>
           {answers && answers?.map((answer) => (
         
-            <Answer answer={answer?.answer} userName={answer.user_name} profile={answer.image_url} answered_date={ answer.answered_date} />
+            <Answer key={answer?.answer_id} answer={answer?.answer} userName={answer.user_name} profile={answer.image_url} answered_date={ answer.answered_date} />
        
       ))}
       <AnswerQuestion questionId={question?.question_id}/>
       <hr />
-    </>
+    </div>
 
   )
 }

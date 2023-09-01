@@ -4,7 +4,7 @@ import answersService from "./answers.service.js";
 const answersController = {
 
     getAnswersById: (req, res) => {
-        //id is postId
+        
         let id = req.params.id[1];
         answersService.answersById(id, (err, results) => {
             if (err) {
