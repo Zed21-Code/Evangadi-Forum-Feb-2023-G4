@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
 import './home.css'
 import axios from "../../utility/axios";
-import { useStateValue } from '../../utility/stateprovider';
 
 const Home = () => {
   const [allQuestions, setallQuestions] = useState([]);
-  const [{user }, dispatch] = useStateValue();
   useEffect(() => {
     async function fetchData() {
       try {
@@ -19,8 +17,7 @@ const Home = () => {
     }
     fetchData();
   }, []);
-console.log(allQuestions)
-console.log(user)
+
 return (
     <div className="container my-5 home-container">
       <div className="d-flex mb-5 justify-content-between">

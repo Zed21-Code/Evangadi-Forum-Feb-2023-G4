@@ -12,3 +12,11 @@
 .subcont{
     justify-content: space-between;
 }
+
+#onelink{
+    color: black;
+    text-decoration: none;
+}
+#onelink:hover{
+    color: rgba(0, 0, 255, 0.544);
+}

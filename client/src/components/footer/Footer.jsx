@@ -10,7 +10,7 @@ const Footer = () => {
       <div className="d-flex justify-content-center">
         <div className="row">
           <div className="row">
-            <img className='logo' src='https://www.evangadi.com/themes/humans//assets/images/misc/evangadi-logo-home.png' alt="evangadi logo" />
+            <img className='logo' src='https://www.evangadi.com/themes/humans//assets/images/misc/evangadi-logo-footer.png' alt="evangadi logo" />
           </div>
           <div className="row m-0 p-0">
             <div className="col-2"><InstagramIcon/></div>
