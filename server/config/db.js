@@ -15,7 +15,6 @@ export const connection = mysql.createConnection({
 	database,
 	user,
 	password,
-	// socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock",
 });
 
 connection.connect((error) => {
