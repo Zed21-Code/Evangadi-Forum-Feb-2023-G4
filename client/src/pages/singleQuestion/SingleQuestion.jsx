@@ -50,13 +50,14 @@ const SingleQuestion = () => {
       console.log("problem", err);
     }
   };
- // console.log(answers);
+  // console.log(question)
+ console.log(answers);
   return (
     <div className="container">
       <h2>Question</h2>
       <h4>{question?.question}</h4>
        <h5>{question?.category}</h5>
-      <h5>{question?.question_descrih5tion}</h5>
+      <h5>{question?.question_description}</h5>
       <p>{moment(question?.inserted_datetime).format("HH:mm:ss MM/DD/YYYY")}</p>
       <hr />
       <hr />
