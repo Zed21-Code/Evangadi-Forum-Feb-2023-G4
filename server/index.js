@@ -27,10 +27,14 @@ const corsOptions = {
     credentials: true
   };
   
-  server.use(cors(corsOptions));
-  
-server.use(express.urlencoded({ extended: true }));
+  server.use(
+	express.urlencoded({
+		extended: true,
+	})
+);
+
 server.use(express.json());
+server.use(cors());
 
 //routes
 server.use("/api/users", usersRouter);
