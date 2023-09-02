@@ -22,16 +22,13 @@ const server = express();
 
 //middleware
 // server.use(cors());
+const corsOptions = {
+    origin: 'https://evangadi-forum-feb-2023.netlify.app',
+    credentials: true
+  };
   
-  server.use(cors({
-    origin: (origin, callback) => {
-        // Allow requests from any origin
-        callback(null, true);
-    },
-    credentials: true // Allow credentials (cookies) to be sent
-}));
-
-
+  server.use(cors(corsOptions));
+  
 server.use(express.urlencoded({ extended: true }));
 server.use(express.json());
 
