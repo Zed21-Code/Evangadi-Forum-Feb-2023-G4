@@ -175,7 +175,7 @@ const userController = {
             email,
             v_code,
           }
-        res.send({state: 'success' ,msg: `code sent to your email` });
+        res.send({state: 'success', msg: `code sent to your email` });
          console.log(verify_data);
 
       })

@@ -23,7 +23,8 @@ const server = express();
 //middleware
 // server.use(cors());
 const corsOptions = {
-    origin: 'https://evangadi-forum-feb-2023.netlify.app',
+    // origin: 'https://evangadi-forum-feb-2023.netlify.app',
+    origin: 'http://127.0.0.1:5173',
     credentials: true
   };
   
@@ -46,7 +47,7 @@ server.get('/', (req, res) => {
 
 
 
-server.listen(port, host, (error) => { 
+server.listen(port, (error) => { 
     if (error) console.log(error);
     console.log(`http://${host}:${[port]}`);
 });

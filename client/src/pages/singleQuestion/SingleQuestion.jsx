@@ -51,7 +51,7 @@ const SingleQuestion = () => {
     }
   };
   // console.log(question)
- console.log(answers);
+//  console.log(answers);
   return (
     <div className="container">
       <h2>Question</h2>
