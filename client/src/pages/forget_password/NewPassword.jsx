@@ -39,7 +39,11 @@ const [{user }, dispatch] = useStateValue();
         const data = response.data;
         alert(data.msg)
         if (data.msg == 'password changed successfully') { 
-          navigate('/login');
+          dispatch({
+            type: "SET_USER",
+            user: null,
+        });
+          navigate('/success');
         }
         console.log(data);
         

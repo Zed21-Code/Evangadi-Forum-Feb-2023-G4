@@ -42,7 +42,7 @@ const navigate = useNavigate();
         <div className="linkcontainer ">
           <ul className='d-flex gap-5'>
          <li><Link to='/' id='onelink'>home</Link></li>
-            <li>how it work</li>
+         <Link to='/' id='onelink'>how it work</Link>
             {user ?
               <>
                 <h6 onClick={handleClick}><AccountCircleIcon/>{user.user['username']}</h6>

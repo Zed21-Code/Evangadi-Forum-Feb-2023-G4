@@ -4,8 +4,12 @@
 }
 ul {
     list-style-type: none;
+    color: rgba(213, 213, 213, 0.6);
 }
 .logo{
     width: 190px;
     object-fit: contain;
+}
+.row h4{
+    color: white;
 }

@@ -24,7 +24,6 @@ return (
         <Link to='AskQuestion' ><button className="ask_button" >
           Ask Question
         </button></Link>
-        <h4>Welcome</h4>
       </div>
       <h3>Questions</h3>
       <div>
