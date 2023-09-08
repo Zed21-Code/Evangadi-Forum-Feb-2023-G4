@@ -5,13 +5,17 @@ import axios from '../../utility/axios';
 import { useStateValue } from '../../utility/stateprovider'
 import About from '../../components/about/About';
 
+
 const Forget_password = () => {
 const [{user }, dispatch] = useStateValue();
   const [form, setForm] = useState({});
   const [errors, setError] = useState({});
   const [auth, setAuth] = useState(false);
   const [message, setMessage] = useState('');
+ 
   const navigate = useNavigate();
+ 
+   
 
    const setField = (field, value) => {
     setForm({
@@ -29,13 +33,14 @@ const [{user }, dispatch] = useStateValue();
 
     const handleSubmit = async (e) => {
       e.preventDefault();
+      setMessage(''); 
         if (1) {
     // if (validateForm()) {
       try {
         axios.defaults.withCredentials = true;
         const response = await axios.post(`/api/users/forgetpassword`,form);
         const data = response.data;
-        alert(data.msg)
+        // alert(data.msg)
         if (data.state == 'success') { 
             dispatch({
               type: "SET_EMAIL",
@@ -49,7 +54,8 @@ const [{user }, dispatch] = useStateValue();
         console.log(data);
         
       } catch (error) {
-        alert("Error authenticating user");
+        // alert("Error authenticating user");
+        setMessage("Error authenticating user");
       console.log('Error authenticating user:', error.message);
       setError({
         ...errors,
@@ -80,7 +86,9 @@ const [{user }, dispatch] = useStateValue();
               name="email"
               onChange={(e) => setField('email', e.target.value)}
               placeholder="Your Email"
-            />
+            /><br />
+          <small className="error__msg">{message}</small>
+          <br />
             <span  className="showHide2">
              <br />
             </span>

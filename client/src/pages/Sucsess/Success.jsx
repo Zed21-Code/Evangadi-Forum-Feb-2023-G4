@@ -9,7 +9,7 @@ function Success() {
         <div className="container py-5 d-md-flex justify-content-between login_container">
           <div className="main col-12 col-md-6 me-md-2 p-5 d-flex flex-column justify-content-center">
             <p className="p1">password changed successfully</p>
-            <Link to="http://127.0.0.1:5173/" className="a3 a1">
+            <Link to="http://localhost:5173/" className="a3 a1">
               login
             </Link>
           </div>
@@ -18,18 +18,4 @@ function Success() {
       </div>
   )
 }
-
 export default Success
-
-
-
-    
-    
-    
-  
-  
-  
-    
-   
-  
-  

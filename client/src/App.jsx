@@ -17,7 +17,7 @@ import Code_enter from './pages/forget_password/Code_enter';
 import NewPassword from './pages/forget_password/NewPassword';
 import AskQuestion from './pages/AskQuestion/AskQuestion';
 import SingleQuestion from './pages/singleQuestion/SingleQuestion';
-import Success from './pages/Success/Success'
+import Success from './pages/Sucsess/Success'
 
 
 
@@ -38,10 +38,6 @@ function App() {
         <Route path='/signup' element={<>
                                 <Signup />
                               </>} />
-
-                              <Route path='/success' element={<>
-                                <Success />
-                              </>} />
         
         <Route path='/AskQuestion' element={<>
                                <Header /> <AskQuestion />
@@ -56,7 +52,8 @@ function App() {
                               </>} />
 
         <Route path="/questions/:id" element={<SingleQuestion />} />
-
+        
+        <Route path="/Success" element={<Success />} />
       </Routes>
 
       <Footer />

@@ -12,11 +12,24 @@
 .subcont{
     justify-content: space-between;
 }
+.imageconainer > .logo{
+    /* width: 150px; */
+}
 
 #onelink{
     color: black;
     text-decoration: none;
 }
 #onelink:hover{
-    color: rgba(0, 0, 255, 0.544);
+    color: #ff8500;
+}
+.false:hover{
+    color: #ff8500;
+}
+.responsive-navbar-nav:hover{
+    color: #ff8500;
+}
+.icon_coll:hover{
+    color: #ff8500;
+    background-color: #ff8500;
 }

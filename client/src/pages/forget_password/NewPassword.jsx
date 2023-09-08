@@ -4,6 +4,7 @@ import { useNavigate,Link } from 'react-router-dom';
 import axios from '../../utility/axios';
 import { useStateValue } from '../../utility/stateprovider'
 import About from '../../components/about/About';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const newPassword = () => {
 const [{user }, dispatch] = useStateValue();
@@ -12,6 +13,25 @@ const [{user }, dispatch] = useStateValue();
   const [auth, setAuth] = useState(false);
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
+// const [showPassword, setShowPassword] = useState(false);
+// const [conshowPassword, setconShowPassword] = useState(false);
+//     const togglePasswordVisibility = () => {
+//       setShowPassword(!showPassword);
+//   };
+//   const contogglePasswordVisibility = () => {
+//       setconShowPassword(!conshowPassword);
+//   };
+  
+  const [showPassword, setShowPassword] = useState(false);
+const [conshowPassword, setconShowPassword] = useState(false);
+
+const togglePasswordVisibility = () => {
+  setShowPassword(!showPassword);
+};
+
+const contogglePasswordVisibility = () => {
+  setconShowPassword(!conshowPassword);
+};
 
    const setField = (field, value) => {
     setForm({
@@ -26,36 +46,50 @@ const [{user }, dispatch] = useStateValue();
       });
     }
   };
-
+  const validateForm = () => {
+    if (form.password == form.c_password) {
+      return true;
+    } else {
+      return false;
+    }
+  }
     const handleSubmit = async (e) => {
       e.preventDefault();
+      setMessage('');
         if (1) {
-    // if (validateForm()) {
+    //  if (validateForm()) {
       try {
         axios.defaults.withCredentials = true;
         form.email = user.email;
         console.log(form);
         const response = await axios.post(`/api/users/changePassword`,form);
         const data = response.data;
-        alert(data.msg)
-        if (data.msg == 'password changed successfully') { 
-          dispatch({
+        // alert(data.msg)
+        if (data.msg == 'Password changed successfully') { 
+        
+           dispatch({
             type: "SET_USER",
             user: null,
         });
           navigate('/success');
         }
+        
         console.log(data);
         
       } catch (error) {
-        alert("Error authenticating user");
+        // alert("Error authenticating user");
+        setMessage(error.response.data.msg);
       console.log('Error authenticating user:', error.message);
-      setError({
+        setMessage("password don't match")
+        setError({
         ...errors,
         pass: 'Network Error: Unable to reach the server',
       });
       }
-    }
+      }
+    //  else {
+    //     setMessage("password don't match")
+    //   }
   };
 
 
@@ -72,23 +106,48 @@ return (
             </Link>
           </p>
           <form onSubmit={handleSubmit}>
-            <input
-              className="in1"
-              type="password"
-              name="new_password"
-              onChange={(e) => setField('new_password', e.target.value)}
-              placeholder="new_password"
-                    />
-            <input
-              className="in1"
-              type="password"
-              name="c_password"
-              onChange={(e) => setField('c_password', e.target.value)}
-              placeholder="confirm_password"
-            />
-            <span  className="showHide2">
-             <br />
-            </span>
+             <input
+      className={`in11 ${message && "error"}`}
+
+      type={showPassword ? "text" : "password"}
+      name="new_password"
+      onChange={(e) => setField('new_password', e.target.value)}
+      placeholder="New Password"
+    />
+    <span className="showHide2" onClick={togglePasswordVisibility}>
+      {showPassword ? (
+        <FaEyeSlash
+          style={{ width: "24px", height: "24px", cursor: "pointer" }}
+        />
+      ) : (
+        <FaEye
+          style={{ width: "24px", height: "24px", cursor: "pointer" }}
+        />
+      )}
+    </span>
+    <br/>
+    <input
+      className={`in11 ${message && "error"}`}
+
+      type={conshowPassword ? "text" : "password"}
+      name="c_password"
+      onChange={(e) => setField('c_password', e.target.value)}
+      placeholder="Confirm Password"
+          />
+    <span className="showHide2" onClick={contogglePasswordVisibility}>
+      {conshowPassword ? (
+        <FaEyeSlash
+          style={{ width: "24px", height: "24px", cursor: "pointer" }}
+        />
+      ) : (
+        <FaEye
+          style={{ width: "24px", height: "24px", cursor: "pointer" }}
+        />
+      )}
+          </span>
+          <br />
+          <small className="error__msg">{message}</small>
+          <br />
             <button className="btn1">submit</button>
           </form>
           <Link to="/login" className="a3 a1">

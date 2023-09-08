@@ -1,12 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom'
 import {useStateValue} from '../../utility/stateprovider'
 import './header.css';
 import axios from '../../utility/axios';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+// import NavDropdown from 'react-bootstrap/NavDropdown';
 
 const Header = () => {
 const [{user }, dispatch] = useStateValue();
+const [show, handleShow] = useState(false);
 const navigate = useNavigate();
   useEffect(() => {
     if (user == null) {
@@ -30,34 +35,76 @@ const navigate = useNavigate();
      navigate('/profile')
   }
 
+useEffect(() => {
+	const handleScroll = () => {
+		if (window.innerWidth > 992) {
+			handleShow(true);
+		} else {
+			handleShow(false);
+		}
+	};
+	window.addEventListener("resize", handleScroll);
+	return () => {
+		window.removeEventListener("resize", handleScroll);
+	};
+}, []);
 
   return (
-    <div className='header container-fluid m-3 p-3'>
-      <div className="container d-flex subcont">
-        <div className="imageconainer">
-          <Link to='/'>
-          <img className='logo' src='https://www.evangadi.com/themes/humans//assets/images/misc/evangadi-logo-home.png' alt="evangadi logo" /></Link>
-        </div>
+		<>
+			<Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
+				<Container>
+					<Navbar.Brand>
+						<Link to="/">
+							<img
+								className="logo"
+								src="https://www.evangadi.com/themes/humans//assets/images/misc/evangadi-logo-home.png"
+								alt="evangadi logo"
+							/>
+						</Link>
+					</Navbar.Brand>
+				  <Navbar.Toggle
+					className="icon_coll"
+				aria-controls="responsive-navbar-nav" />
+					<Navbar.Collapse id="responsive-navbar-nav ">
+						<Nav className="me-auto"></Nav>
 
-        <div className="linkcontainer ">
-          <ul className='d-flex gap-5'>
-         <li><Link to='/' id='onelink'>home</Link></li>
-         <Link to='/' id='onelink'>how it work</Link>
-            {user ?
-              <>
-                <h6 onClick={handleClick}><AccountCircleIcon/>{user.user['username']}</h6>
-                
-                <li onClick={handlelogout} className='btn btn-primary'>  Logout</li>
-              </>
-            :<Link to='/login'> </Link>
-            }
-            
-            
-          </ul>
-        </div>
-      </div>
-    </div>
-  )
+						{/* <Navbar.Collapse> */}
+						<Nav>
+							<Nav.Link href="#deets">
+								<Link to="/" id="onelink">
+									Home
+								</Link>
+							</Nav.Link>
+							<Nav.Link eventKey={2} href="#memes">
+								<li className={`${show && "ms-3"}`}>How it work</li>
+							</Nav.Link>
+							<Nav.Link className={`${show && "d-flex"}`}>
+								{user ? (
+									<>
+										<h6 className={`${show && "ms-3"}`} onClick={handleClick}>
+											<AccountCircleIcon />
+											{user.user["username"]}
+										</h6>
+
+										<li
+											onClick={handlelogout}
+											className={`btn btn-primary ${show && "ms-5"}`}
+										>
+											{" "}
+											Logout
+										</li>
+									</>
+								) : (
+									<Link to="/login"> </Link>
+								)}
+							</Nav.Link>
+						</Nav>
+					</Navbar.Collapse>
+				</Container>
+			</Navbar>
+
+		</>
+	);
 }
 
 export default Header

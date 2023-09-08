@@ -4,6 +4,7 @@ export default {
     user_name VARCHAR(255) NOT NULL,
     user_email VARCHAR(255) NOT NULL,
     user_password VARCHAR(255) NOT NULL,
+    otp varchar (8),
     PRIMARY KEY (user_id),
     UNIQUE KEY (user_name),
     UNIQUE KEY (user_email)
@@ -62,4 +63,7 @@ export default {
   getAllUsername: `select username from users`,
   getAllAnswer: `select * from answer`,
   getAllQuestion: `select * from question`,
+
+
+
 };

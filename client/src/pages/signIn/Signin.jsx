@@ -1,27 +1,32 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import {useStateValue} from '../../utility/stateprovider'
-import './signin.css'
-import axios from '../../utility/axios';
-import About from '../../components/about/About';
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useStateValue } from "../../utility/stateprovider";
+import "./signin.css";
+import axios from "../../utility/axios";
+import About from "../../components/about/About";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons from React Icons
 
 const Signin = () => {
-  const [{user }, dispatch] = useStateValue();
+  const [{ user }, dispatch] = useStateValue();
   const [form, setForm] = useState({});
   const [errors, setError] = useState({});
   const [auth, setAuth] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+// const handleReload = () => {
+//   window.location.reload();
+//   };
   useEffect(() => {
-    if (user) { 
-      navigate('/');
+    if (user) {
+      navigate("/");
     }
-   // console.log(user);
 
-  }, [navigate])  
-  
-
-   const setField = (field, value) => {
+  }, [navigate]);
+  useEffect(() => {
+      // handleReload()
+},[])
+  const setField = (field, value) => {
     setForm({
       ...form,
       [field]: value,
@@ -35,44 +40,42 @@ const Signin = () => {
     }
   };
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-        if (1) {
-    // if (validateForm()) {
-      try {
-        axios.defaults.withCredentials = true;
-        const response = await axios.post(`/api/users/login`,form);
-        const data = response.data;
-          if (data) {
-            dispatch({
-              type: "SET_USER",
-              user: {
-                token: data.token,
-                user: {
-                  id: data.user['id'],
-                  username: data.user['userName'],
-                }
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
-              },
-            });
-          }
-        navigate('/');
-         // console.log(data);
-        
-      } catch (error) {
-        alert(error.response.data.msg);
-      console.log('Error authenticating user:', error.response.data.msg);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Add your form validation logic here
+
+    try {
+      axios.defaults.withCredentials = true;
+      const response = await axios.post(`/api/users/login`, form);
+      const data = response.data;
+      if (data) {
+        dispatch({
+          type: "SET_USER",
+          user: {
+            token: data.token,
+            user: {
+              id: data.user["id"],
+              username: data.user["userName"],
+            },
+          },
+        });
+      }
+      navigate("/");
+    } catch (error) {
+      // alert(error.response.data.msg);
+         setMessage(error.response.data.msg);
+      console.log("Error authenticating user:", error.response.data.msg);
       setError({
         ...errors,
-        pass: 'Network Error: Unable to reach the server',
+        pass: "Network Error: Unable to reach the server",
       });
-      }
     }
   };
 
-
-
-  
   return (
     <div className="container-fluid login_page">
       <div className="container py-5 d-md-flex justify-content-between login_container">
@@ -84,36 +87,49 @@ const Signin = () => {
               Create a new account
             </Link>
           </p>
+          <small className="error__msg text-center">{message}</small>
+          <br/>
           <form onSubmit={handleSubmit}>
             <input
-              className="in1"
+              className={`in1 ${message && "error"}`}
               type="email"
               name="email"
-              onChange={(e) => setField('email', e.target.value)}
+              onChange={(e) => setField("email", e.target.value)}
               placeholder="Your Email"
             />
-            <input
-              className="in1"
-              name="password"
-              type="password"
-              onChange={(e) => setField('password', e.target.value)}
-              placeholder="Your Password"
-            />
-            <span className="showHide2">
-              <br />
-             
-            </span>
-            <button className="btn1">submit</button>
+            <div className="password-input-container">
+              <input
+                className={`in1 ${message && "error"}`}
+                name="password"
+                type={showPassword ? "text" : "password"}
+                onChange={(e) => setField("password", e.target.value)}
+                placeholder="Your Password"
+              />
+              <span className="showHide2" onClick={togglePasswordVisibility}>
+                {showPassword ? (
+                  <FaEyeSlash
+                    style={{ width: "24px", height: "24px", cursor: "pointer" }}
+                  />
+                ) : (
+                  <FaEye
+                    style={{ width: "24px", height: "24px", cursor: "pointer" }}
+                  />
+                )}
+              </span>
+            </div>
+            <br/>
+            
+
+            <button className="btn1">Signin</button>
           </form>
           <Link to="/forgetpassword" className="a3 a1">
-            forget password?
+            Forgot password?
           </Link>
         </div>
         <About />
       </div>
     </div>
   );
+};
 
-}
-
-export default Signin
+export default Signin;

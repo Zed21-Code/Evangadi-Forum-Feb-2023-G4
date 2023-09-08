@@ -19,6 +19,9 @@ const userService = {
         //query select user using email to get user_id
     },
     changepass: (data, callback) => {
+        console.log(data.new_password)
+    
+
         connection.query(`UPDATE registration SET user_password = ? WHERE user_email = ?`,
             [
                 data.new_password

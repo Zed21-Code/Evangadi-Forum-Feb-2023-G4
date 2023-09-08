@@ -115,3 +115,14 @@ h1 {
 	opacity: 0.65;
 	cursor: pointer;
 }
+.showHide2 :hover{
+	color: #ff8500;
+}
+.error {
+	border: red 1px solid !important;
+	/* color: red; */
+}
+.error__msg {
+	color: red;
+
+}

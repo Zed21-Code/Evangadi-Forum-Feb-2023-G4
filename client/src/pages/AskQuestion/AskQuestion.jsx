@@ -73,7 +73,7 @@ export default function AskQuestion() {
         />
         <select
           className="question_title"
-          name="question_category"
+          name="question_catagory"
           onChange={handleChange}
            required
         >
@@ -90,9 +90,19 @@ export default function AskQuestion() {
           name="questionDescription"
           onChange={handleChange}
         ></textarea>
-        <button className="question_post_btn" >
+        <br/>
+        <div className="row">
+        <button className="question_post_btn col-3" >
           Post Your Question
         </button>
+          <div className="d-flex mb-5 justify-content-between org_bt col-9">
+				<Link to="http://localhost:5173/">
+					<button className="back_dash">Back to dashboard</button>
+				</Link>
+				{/* <h4>Welcome</h4> */}
+			</div>
+        
+  </div>
       </form>
     </div>
   );
