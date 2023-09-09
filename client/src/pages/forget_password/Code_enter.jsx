@@ -47,7 +47,8 @@ const Code_enter = () => {
         
       } catch (error) {
         // alert("Error authenticating user");
-        setMessage("Please enter code");
+        setMessage(error.response.data.msg);
+        
       console.log('Please enter code:', error.message);
       setError({
         ...errors,
@@ -88,7 +89,7 @@ const Code_enter = () => {
             <br />
             <button className="btn1">submit</button>
           </form>
-          <Link to="/login" className="a3 a1">
+          <Link to="/" className="a3 a1">
             Signin with email and password
           </Link>
         </div>

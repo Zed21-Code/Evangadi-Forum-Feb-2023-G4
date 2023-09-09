@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import { connection } from "../../config/db.js";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
+import crypto from 'crypto'
 //import { upload } from '../../config/multer.js';
 import dotenv from "dotenv";
 dotenv.config();
@@ -156,46 +157,91 @@ const userController = {
       });
     });
   },
-  forgetPassword: (req, res) => {
-    const { email } = req.body;
-    console.log(email);
-    // check the email is alredy taken
 
-    connection.query(
-      "SELECT * FROM registration WHERE user_email = ?",
-      [email],
-      (err, results) => {
-        if (err) {
-          return res
-            .status(err)
-            .json({ msg: "database connection err during email checking" });
-        }
-        if (results.length == 0) {
-          return res.status(400).json({ msg: "no account with this email" });
-        }
+  // forgetPassword: (req, res) => {
+  //   const { email } = req.body;
+  //   console.log(email);
+  //   // check the email is alredy taken
 
-        //  sending code
-        let v_code = generateRandomSixDigitNumber();
-        sendEmail(email, v_code);
-        verify_data = {
-          email,
-          v_code,
-        };
-        //save to database
-        const query = `UPDATE registration SET otp = ? WHERE user_email = ?`;
+  //   connection.query(
+  //     "SELECT * FROM registration WHERE user_email = ?",
+  //     [email],
+  //     (err, results) => {
+  //       if (err) {
+  //         return res
+  //           .status(err)
+  //           .json({ msg: "database connection err during email checking" });
+  //       }
+  //       if (results.length == 0) {
+  //         return res.status(400).json({ msg: "no account with this email" });
+  //       }
 
-        connection.query(query, [ v_code, email ], (error) => {
-          if (error) {
-            console.log("error", error)
-            return res.send(error)
-          }
+  //       //  sending code
+  //       let v_code = generateRandomSixDigitNumber();
+  //       sendEmail(email, v_code);
+  //       verify_data = {
+  //         email,
+  //         v_code,
+  //       };
+  //       //save to database
+  //       const query = `UPDATE registration SET otp = ? WHERE user_email = ?`;
+
+  //       connection.query(query, [ v_code, email ], (error) => {
+  //         if (error) {
+  //           console.log("error", error)
+  //           return res.send(error)
+  //         }
           
-        })
-        res.send({ state: "success", msg: `code sent to your email` });
-        console.log(verify_data);
+  //       })
+  //       res.send({ state: "success", msg: `code sent to your email` });
+  //       console.log(verify_data);
+  //     }
+  //   );
+  // },
+
+  
+
+
+
+// Your forgetPassword route
+forgetPassword: (req, res) => {
+  const { email } = req.body;
+  console.log(email);
+  
+  // Check if the email already exists in the database
+  connection.query(
+    "SELECT * FROM registration WHERE user_email = ?",
+    [email],
+    (err, results) => {
+      if (err) {
+        return res
+          .status(500)
+          .json({ msg: "Database connection error during email checking" });
       }
-    );
-  },
+      if (results.length === 0) {
+        return res.status(400).json({ msg: "No account with this email" });
+      }
+
+      // Generate a random OTP
+      const otp = generateRandomSixDigitOTP();
+      
+      // Store the OTP in the database
+      const updateQuery = "UPDATE registration SET otp = ? WHERE user_email = ?";
+      connection.query(updateQuery, [otp, email], (error) => {
+        if (error) {
+          console.log("Error updating OTP in the database", error);
+          return res.status(500).json({ msg: "Error updating OTP in the database" });
+        }
+
+        // Send the OTP via email
+        sendEmail(email, otp);
+
+        res.send({ state: "success", msg: "OTP sent to your email" });
+      });
+    }
+  );
+},
+
 
   confimCode: (req, res) => {
     const query = `select otp from  registration where user_email=?`
@@ -211,38 +257,14 @@ const userController = {
       if (data && v_code == data) {
       res.send({ state: "success", msg: `confimed` });
     } else {
-      res.status(400).json({ msg: "incorrect v_code" });
+      res.status(400).json({ msg: "incorrect verification code" });
     }
     })
     
     
   },
 
-//   changePassword: (req, res) => {
-//     const { new_password, c_password, email } = req.body;
-    
-//     if (new_password != c_password) {
-//       res
-//         .status(400)
-//         .json({ msg: "password and c_password has to be the same" });
-//     }
 
-//     //password encryption
-//     const salt = bcrypt.genSaltSync();
-//     req.body.new_password = bcrypt.hashSync(new_password, salt);
-// console.log(req.body);
-//     userService.changepass(req.body, (err, results) => {
-//       if (err) {
-//         console.log(err);
-//         // return res.status(500).json({ msg: "database connection err" });
-//       }
-//       return res.status(200).json({
-//         msg: "password changed successfully",
-//         data: results,
-//       });
-//       // console.log(results)
-//     });
-//   },
   changePassword: (req, res) => {
   const { new_password, c_password, email } = req.body;
   console.log(req.body);
@@ -334,7 +356,37 @@ const generateRandomSixDigitNumber = () => {
 export default userController;
 
 // Function to send email
-const sendEmail = async (user_email, v_code) => {
+// const sendEmail = async (user_email, v_code) => {
+//   try {
+//     const transporter = nodemailer.createTransport({
+//       service: "gmail",
+//       auth: {
+//         user: process.env.EMAIL,
+//         pass: process.env.EMAIL_PASSWORD,
+//       },
+//     });
+
+//     const mailOptions = {
+//       from: process.env.EMAIL,
+//       to: user_email,
+//       subject: "text",
+//       text: `your evangadi verification code is ${v_code}`,
+//     };
+
+//     await transporter.sendMail(mailOptions);
+//     console.log("Email sent successfully!");
+//   } catch (error) {
+//     console.error("Error sending email:", error);
+//     throw error;
+//   }
+// };
+
+// Function to generate a random 6-digit OTP
+function generateRandomSixDigitOTP() {
+  return Math.floor(100000 + Math.random() * 900000);
+}
+
+const sendEmail = async (user_email, otp) => {
   try {
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -347,8 +399,8 @@ const sendEmail = async (user_email, v_code) => {
     const mailOptions = {
       from: process.env.EMAIL,
       to: user_email,
-      subject: "text",
-      text: `your evangadi verification code is ${v_code}`,
+      subject: "Verification Code",
+      text: `Your verification code is ${otp}`,
     };
 
     await transporter.sendMail(mailOptions);

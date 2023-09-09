@@ -8,19 +8,21 @@ const Footer = () => {
   return (
     <div className='Footer container-fluid p-5'>
       <div className="d-flex justify-content-center">
+        
         <div className="row">
           <div className="row">
             <img className='logo' src='https://www.evangadi.com/themes/humans//assets/images/misc/evangadi-logo-footer.png' alt="evangadi logo" />
           </div>
-          <div className="row m-0 p-0 cir_br ">
+          <div className="row m-0 p-0 cir_br">
             <div className="col-2"><a href='#'><InstagramIcon/></a></div>
             <div className="col-2"><a href='#'><FacebookRoundedIcon/></a></div>
             <div className="col-2"><a href='#'><YouTubeIcon/></a></div>
           </div>
           
-
         </div>
-        {/* <div className=''> */}
+        
+
+        
         <div className="row">
           <h4 className='footer_t'>Useful Link</h4>
           <ul>
@@ -29,6 +31,9 @@ const Footer = () => {
             <li><a href='#'>Privacy policy</a></li>
           </ul>
         </div>
+        
+
+        
         <div className="row">
           <h4 className='footer_t'>Contact Info</h4>
           <ul>
@@ -37,7 +42,9 @@ const Footer = () => {
             <li>+1-202-386-2702</li>
           </ul>
           </div>
-          {/* </div> */}
+        
+        
+          
       </div>
 
 

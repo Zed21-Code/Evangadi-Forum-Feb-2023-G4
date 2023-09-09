@@ -10,6 +10,7 @@ const AnswerQuestion = ({ questionId }) => {
   const navigate = useNavigate();
   const [form, setForm] = useState({});
   const [reloadComponent, setReloadComponent] = useState(false);
+  const [message, setMessage] = useState('')
 
   useEffect(() => {
     if (reloadComponent) {
@@ -31,6 +32,7 @@ const AnswerQuestion = ({ questionId }) => {
     });
 
     try {
+      setMessage('')
       const response = await axios.post(
         "/api/answers/newanswer",
         {
@@ -39,7 +41,8 @@ const AnswerQuestion = ({ questionId }) => {
           answer: form.answer,
         }
       );
-      alert(response.data.msg);
+      // alert(response.data.msg);
+      setMessage(response.data.msg)
 
       
 
@@ -59,6 +62,7 @@ const AnswerQuestion = ({ questionId }) => {
           onSubmit={handleSubmit}
           className="d-flex flex-column p-5 answer_form  justify-content-between"
         >
+          <p>{message}</p>
           <h3 className="">Answer The Top Question</h3>
           <Link
             to="/"
@@ -80,7 +84,7 @@ const AnswerQuestion = ({ questionId }) => {
           Post Your Answer
         </button>
           <div className="d-flex mb-5 justify-content-between org_bt col-9">
-				<Link to="http://localhost:5173/">
+				<Link to="/">
 					<button className="back_dash">Back to dashboard</button>
 				</Link>
 				{/* <h4>Welcome</h4> */}

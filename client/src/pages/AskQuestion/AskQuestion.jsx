@@ -6,6 +6,7 @@ import { useStateValue } from '../../utility/stateprovider';
 export default function AskQuestion() {
   const [{user }, dispatch] = useStateValue();
   const [form, setForm] = useState({});
+  const [message, setMessage] = useState('')
   const navigate = useNavigate();
 
     useEffect(() => {
@@ -28,6 +29,7 @@ export default function AskQuestion() {
           questionDescription: form.questionDescription,
         });
     try {
+      setMessage('')
       const response = await axios.post(
         "/api/questions/createQuestion",
         {
@@ -37,8 +39,12 @@ export default function AskQuestion() {
           questionDescription: form.questionDescription,
         }
       );
-      alert(response.data.msg);
-      navigate("/");
+      // alert(response.data.msg);
+      setMessage(response.data.msg)
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+      
     } catch (err) {
       alert(err)
       console.log("problem", err);
@@ -47,6 +53,7 @@ export default function AskQuestion() {
   return (
     <div className="container my-5">
       <div className="d-flex flex-column align-items-center my-5">
+      <p>{message}</p>
         <h3>Steps to write a good question</h3>
         <ul className="question_steps">
           <li>Summerize your problem in a one-line title.</li>
@@ -96,7 +103,7 @@ export default function AskQuestion() {
           Post Your Question
         </button>
           <div className="d-flex mb-5 justify-content-between org_bt col-9">
-				<Link to="http://localhost:5173/">
+				<Link to="/">
 					<button className="back_dash">Back to dashboard</button>
 				</Link>
 				{/* <h4>Welcome</h4> */}

@@ -13,14 +13,6 @@ const [{user }, dispatch] = useStateValue();
   const [auth, setAuth] = useState(false);
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
-// const [showPassword, setShowPassword] = useState(false);
-// const [conshowPassword, setconShowPassword] = useState(false);
-//     const togglePasswordVisibility = () => {
-//       setShowPassword(!showPassword);
-//   };
-//   const contogglePasswordVisibility = () => {
-//       setconShowPassword(!conshowPassword);
-//   };
   
   const [showPassword, setShowPassword] = useState(false);
 const [conshowPassword, setconShowPassword] = useState(false);
@@ -61,7 +53,6 @@ const contogglePasswordVisibility = () => {
       try {
         axios.defaults.withCredentials = true;
         form.email = user.email;
-        console.log(form);
         const response = await axios.post(`/api/users/changePassword`,form);
         const data = response.data;
         // alert(data.msg)
@@ -74,8 +65,6 @@ const contogglePasswordVisibility = () => {
           navigate('/success');
         }
         
-        console.log(data);
-        
       } catch (error) {
         // alert("Error authenticating user");
         setMessage(error.response.data.msg);
@@ -87,9 +76,6 @@ const contogglePasswordVisibility = () => {
       });
       }
       }
-    //  else {
-    //     setMessage("password don't match")
-    //   }
   };
 
 
