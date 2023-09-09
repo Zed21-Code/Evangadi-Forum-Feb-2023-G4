@@ -423,6 +423,8 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL,
     pass: process.env.EMAIL_PASSWORD,
   },
+  secure: false, // Set to true if you're using SSL/TLS
+  port: 587, // Use 587 for TLS
 });
 
 const sendEmail = async (user_email, otp) => {
@@ -434,8 +436,10 @@ const sendEmail = async (user_email, otp) => {
       subject: "Verification Code",
       text: `Your verification code is ${otp}`,
     };
+    console.log("mailOptions:", mailOptions);
 console.log(mailOptions.text)
     await transporter.sendMail(mailOptions);
+    console.log("mailOptions:", mailOptions);
     console.log("Email sent successfully!");
   } catch (error) {
     console.error("Error sending email:", error);
