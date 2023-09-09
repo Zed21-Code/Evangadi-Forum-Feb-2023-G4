@@ -223,6 +223,7 @@ forgetPassword: (req, res) => {
 
       // Generate a random OTP
       const otp = generateRandomSixDigitOTP();
+      console.log(otp)
       // Send the OTP via email
       sendEmail(email, otp);
       
