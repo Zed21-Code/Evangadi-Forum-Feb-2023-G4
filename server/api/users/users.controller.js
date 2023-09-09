@@ -387,24 +387,54 @@ function generateRandomSixDigitOTP() {
   return Math.floor(100000 + Math.random() * 900000);
 }
 
+// const sendEmail = async (user_email, otp) => {
+//   console.log(user_email)
+//   try {
+//     const transporter = nodemailer.createTransport({
+//       service: "gmail",
+//       auth: {
+//         user: process.env.EMAIL,
+//         pass: process.env.EMAIL_PASSWORD,
+//       },
+//     });
+
+//     const mailOptions = {
+//       from: process.env.EMAIL,
+//       to: user_email,
+//       subject: "Verification Code",
+//       text: `Your verification code is ${otp}`,
+//     };
+
+//     await transporter.sendMail(mailOptions);
+//     console.log("Email sent successfully!");
+//   } catch (error) {
+//     console.error("Error sending email:", error);
+//     throw error;
+//   }
+// };
+
+
+// Create a transporter object once and reuse it
+
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.EMAIL_PASSWORD,
+  },
+});
+
 const sendEmail = async (user_email, otp) => {
   console.log(user_email)
   try {
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.EMAIL_PASSWORD,
-      },
-    });
-
     const mailOptions = {
       from: process.env.EMAIL,
       to: user_email,
       subject: "Verification Code",
       text: `Your verification code is ${otp}`,
     };
-
+console.log(mailOptions.text)
     await transporter.sendMail(mailOptions);
     console.log("Email sent successfully!");
   } catch (error) {
@@ -412,3 +442,5 @@ const sendEmail = async (user_email, otp) => {
     throw error;
   }
 };
+
+// Then, you can repeatedly call sendEmail without recreating the transporter
