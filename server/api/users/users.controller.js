@@ -225,7 +225,7 @@ forgetPassword: (req, res) => {
       const otp = generateRandomSixDigitOTP();
       console.log(otp)
       // Send the OTP via email
-      sendEmail(email, otp);
+      
       
       // Store the OTP in the database
       const updateQuery = "UPDATE registration SET otp = ? WHERE user_email = ?";
@@ -235,7 +235,7 @@ forgetPassword: (req, res) => {
           return res.status(500).json({ msg: "Error updating OTP in the database" });
         }
 
-        
+        sendEmail(email, otp);
 
         res.send({ state: "success", msg: "OTP sent to your email" });
       });
@@ -388,6 +388,7 @@ function generateRandomSixDigitOTP() {
 }
 
 const sendEmail = async (user_email, otp) => {
+  console.log(user_email)
   try {
     const transporter = nodemailer.createTransport({
       service: "gmail",
