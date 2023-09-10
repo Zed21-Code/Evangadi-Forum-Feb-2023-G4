@@ -436,10 +436,7 @@ const sendEmail = async (user_email, otp) => {
       subject: "Verification Code",
       text: `Your verification code is ${otp}`,
     };
-    console.log("mailOptions:", mailOptions);
-console.log(mailOptions.text)
     await transporter.sendMail(mailOptions);
-    console.log("mailOptions:", mailOptions);
     console.log("Email sent successfully!");
   } catch (error) {
     console.error("Error sending email:", error);

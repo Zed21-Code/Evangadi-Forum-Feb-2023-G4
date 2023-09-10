@@ -23,18 +23,18 @@ const host = process.env.SERVER_HOST;
 const server = express();
 
 //middleware
-// server.use(cors({
-//     origin: (origin, callback) => {
-//         // Allow requests from any origin
-//         callback(null, true);
-//     },
-//     credentials: true // Allow credentials (cookies) to be sent
-// }));
-
 server.use(cors({
-    origin: 'http://127.0.0.1:5173',
+    origin: (origin, callback) => {
+        // Allow requests from any origin
+        callback(null, true);
+    },
     credentials: true // Allow credentials (cookies) to be sent
 }));
+
+// server.use(cors({
+//     origin: 'http://127.0.0.1:5173',
+//     credentials: true // Allow credentials (cookies) to be sent
+// }));
 
 
 

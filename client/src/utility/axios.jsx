@@ -1,9 +1,8 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:4000", // api url
-  // baseURL: "https://clean-gloves-bee.cyclic.app", // api url
-  // baseURL: "https://happy-jade-peacock.cyclic.app/",
+  // baseURL: "http://localhost:4000", // api url
+  baseURL: "https://puce-perch-boot.cyclic.cloud/", // api url
 
   withCredentials: true,
 });
