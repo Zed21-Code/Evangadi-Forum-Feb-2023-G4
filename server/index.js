@@ -32,7 +32,7 @@ const server = express();
 // }));
 
 server.use(cors({
-    origin: 'https://evangadi-forum-feb-2023.netlify.app/',
+    origin: 'https://evangadi-forum-feb-2023.netlify.app',
     credentials: true // Allow credentials (cookies) to be sent
 }));
 
